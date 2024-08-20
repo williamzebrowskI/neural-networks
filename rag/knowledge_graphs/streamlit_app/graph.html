@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": "514d8b969b5f30e2b10e33d49e679dfb", "label": "514d8b969b5f30e2b10e33d49e679dfb", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Fsa Id", "label": "Fsa Id", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Ssn", "label": "Ssn", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Parent/Contributor", "label": "Parent/Contributor", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Knowledge Based Identity Questions", "label": "Knowledge Based Identity Questions", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Email", "label": "Email", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Case Number", "label": "Case Number", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Additional Documents", "label": "Additional Documents", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Fafsa", "label": "Fafsa", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Https://Fafsa.Gov", "label": "Https://Fafsa.Gov", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Https://Studentaid.Gov/Fsa-Id/Create-Account/Launch", "label": "Https://Studentaid.Gov/Fsa-Id/Create-Account/Launch", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Social Security Number", "label": "Social Security Number", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Name", "label": "Name", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Date Of Birth", "label": "Date Of Birth", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Email Address", "label": "Email Address", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Permanent Address", "label": "Permanent Address", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Phone Number", "label": "Phone Number", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Fsa Id And Password", "label": "Fsa Id And Password", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Federal Aid", "label": "Federal Aid", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "College", "label": "College", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "University", "label": "University", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Financial Aid", "label": "Financial Aid", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "d17391a2de2ba79f56e6e0ae045e21cd", "label": "d17391a2de2ba79f56e6e0ae045e21cd", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Students", "label": "Students", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Pell Grants", "label": "Pell Grants", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Calculator", "label": "Calculator", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Https://Studentaid.Gov/Aid-Estimator/", "label": "Https://Studentaid.Gov/Aid-Estimator/", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "00381428d3e6b85ba25926c503a39a96", "label": "00381428d3e6b85ba25926c503a39a96", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Authenticator App", "label": "Authenticator App", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Phone", "label": "Phone", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Secure Code", "label": "Secure Code", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Associated Accounts", "label": "Associated Accounts", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Two-Step Verification", "label": "Two-Step Verification", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Settings", "label": "Settings", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "6ea0e8e3e2e7ce9460bc63cd915a943f", "label": "6ea0e8e3e2e7ce9460bc63cd915a943f", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Wyatt Terms \u0026 Conditions", "label": "Wyatt Terms \u0026 Conditions", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Personal Info", "label": "Personal Info", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Financial Information", "label": "Financial Information", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Third Party", "label": "Third Party", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "21cd09470a789d95d28fbfe22e0f5b22", "label": "21cd09470a789d95d28fbfe22e0f5b22", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Wyatt", "label": "Wyatt", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Benefits Data Trust", "label": "Benefits Data Trust", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Office Of Federal Student Aid", "label": "Office Of Federal Student Aid", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "a8a3a5bbfa4a15168152c2e35b5355fd", "label": "a8a3a5bbfa4a15168152c2e35b5355fd", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "College Application", "label": "College Application", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Need-Based Aid", "label": "Need-Based Aid", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Common App", "label": "Common App", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "3d1bce07be82b971747e05ee20a7c362", "label": "3d1bce07be82b971747e05ee20a7c362", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "College Costs", "label": "College Costs", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Colleges", "label": "Colleges", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "College Costs Information", "label": "College Costs Information", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "7a2a28d9bb88da15ac073049112730ce", "label": "7a2a28d9bb88da15ac073049112730ce", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "d3c157170438f177fbf50d6bc4b5de6b", "label": "d3c157170438f177fbf50d6bc4b5de6b", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Crisis Counselor", "label": "Crisis Counselor", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Crisis Text Line", "label": "Crisis Text Line", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "911", "label": "911", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "741741", "label": "741741", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "16f8e7d7d872490aed5d026d46894456", "label": "16f8e7d7d872490aed5d026d46894456", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Css Profile", "label": "Css Profile", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Schools", "label": "Schools", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Institutional Aid", "label": "Institutional Aid", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "feea6b8d0297f85a1ea999907d897366", "label": "feea6b8d0297f85a1ea999907d897366", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Daca Status", "label": "Daca Status", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Federal Financial Aid", "label": "Federal Financial Aid", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"from": "514d8b969b5f30e2b10e33d49e679dfb", "label": null, "to": "Fsa Id", "width": 1}, {"from": "514d8b969b5f30e2b10e33d49e679dfb", "label": null, "to": "Ssn", "width": 1}, {"from": "514d8b969b5f30e2b10e33d49e679dfb", "label": null, "to": "Parent/Contributor", "width": 1}, {"from": "514d8b969b5f30e2b10e33d49e679dfb", "label": null, "to": "Knowledge Based Identity Questions", "width": 1}, {"from": "514d8b969b5f30e2b10e33d49e679dfb", "label": null, "to": "Email", "width": 1}, {"from": "514d8b969b5f30e2b10e33d49e679dfb", "label": null, "to": "Case Number", "width": 1}, {"from": "514d8b969b5f30e2b10e33d49e679dfb", "label": null, "to": "Additional Documents", "width": 1}, {"from": "514d8b969b5f30e2b10e33d49e679dfb", "label": null, "to": "Fafsa", "width": 1}, {"from": "Fsa Id", "label": null, "to": "Ssn", "width": 1}, {"from": "Fsa Id", "label": null, "to": "Parent/Contributor", "width": 1}, {"from": "Fsa Id", "label": null, "to": "Https://Fafsa.Gov", "width": 1}, {"from": "Fsa Id", "label": null, "to": "Https://Studentaid.Gov/Fsa-Id/Create-Account/Launch", "width": 1}, {"from": "Fsa Id", "label": null, "to": "Social Security Number", "width": 1}, {"from": "Fsa Id", "label": null, "to": "Name", "width": 1}, {"from": "Fsa Id", "label": null, "to": "Date Of Birth", "width": 1}, {"from": "Fsa Id", "label": null, "to": "Email Address", "width": 1}, {"from": "Fsa Id", "label": null, "to": "Permanent Address", "width": 1}, {"from": "Fsa Id", "label": null, "to": "Phone Number", "width": 1}, {"from": "Fsa Id", "label": null, "to": "Fsa Id And Password", "width": 1}, {"from": "Parent/Contributor", "label": null, "to": "Knowledge Based Identity Questions", "width": 1}, {"from": "Parent/Contributor", "label": null, "to": "Email", "width": 1}, {"from": "Parent/Contributor", "label": null, "to": "Fafsa", "width": 1}, {"from": "Email", "label": null, "to": "Case Number", "width": 1}, {"from": "Email", "label": null, "to": "Additional Documents", "width": 1}, {"from": "Fafsa", "label": null, "to": "Federal Aid", "width": 1}, {"from": "Fafsa", "label": null, "to": "College", "width": 1}, {"from": "Fafsa", "label": null, "to": "University", "width": 1}, {"from": "Fafsa", "label": null, "to": "Financial Aid", "width": 1}, {"from": "d17391a2de2ba79f56e6e0ae045e21cd", "label": null, "to": "Students", "width": 1}, {"from": "d17391a2de2ba79f56e6e0ae045e21cd", "label": null, "to": "Pell Grants", "width": 1}, {"from": "d17391a2de2ba79f56e6e0ae045e21cd", "label": null, "to": "Financial Aid", "width": 1}, {"from": "d17391a2de2ba79f56e6e0ae045e21cd", "label": null, "to": "Calculator", "width": 1}, {"from": "d17391a2de2ba79f56e6e0ae045e21cd", "label": null, "to": "Https://Studentaid.Gov/Aid-Estimator/", "width": 1}, {"from": "Students", "label": null, "to": "Pell Grants", "width": 1}, {"from": "Students", "label": null, "to": "Financial Aid", "width": 1}, {"from": "Students", "label": null, "to": "Calculator", "width": 1}, {"from": "Calculator", "label": null, "to": "Https://Studentaid.Gov/Aid-Estimator/", "width": 1}, {"from": "00381428d3e6b85ba25926c503a39a96", "label": null, "to": "Authenticator App", "width": 1}, {"from": "00381428d3e6b85ba25926c503a39a96", "label": null, "to": "Phone", "width": 1}, {"from": "00381428d3e6b85ba25926c503a39a96", "label": null, "to": "Secure Code", "width": 1}, {"from": "00381428d3e6b85ba25926c503a39a96", "label": null, "to": "Associated Accounts", "width": 1}, {"from": "00381428d3e6b85ba25926c503a39a96", "label": null, "to": "Fsa Id", "width": 1}, {"from": "00381428d3e6b85ba25926c503a39a96", "label": null, "to": "Https://Fafsa.Gov", "width": 1}, {"from": "00381428d3e6b85ba25926c503a39a96", "label": null, "to": "Two-Step Verification", "width": 1}, {"from": "00381428d3e6b85ba25926c503a39a96", "label": null, "to": "Settings", "width": 1}, {"from": "Authenticator App", "label": null, "to": "Phone", "width": 1}, {"from": "Authenticator App", "label": null, "to": "Secure Code", "width": 1}, {"from": "Secure Code", "label": null, "to": "Associated Accounts", "width": 1}, {"from": "Https://Fafsa.Gov", "label": null, "to": "Two-Step Verification", "width": 1}, {"from": "Two-Step Verification", "label": null, "to": "Settings", "width": 1}, {"from": "6ea0e8e3e2e7ce9460bc63cd915a943f", "label": null, "to": "Wyatt Terms \u0026 Conditions", "width": 1}, {"from": "6ea0e8e3e2e7ce9460bc63cd915a943f", "label": null, "to": "Personal Info", "width": 1}, {"from": "6ea0e8e3e2e7ce9460bc63cd915a943f", "label": null, "to": "Financial Information", "width": 1}, {"from": "6ea0e8e3e2e7ce9460bc63cd915a943f", "label": null, "to": "Third Party", "width": 1}, {"from": "Wyatt Terms \u0026 Conditions", "label": null, "to": "Personal Info", "width": 1}, {"from": "Personal Info", "label": null, "to": "Third Party", "width": 1}, {"from": "Financial Information", "label": null, "to": "Third Party", "width": 1}, {"from": "21cd09470a789d95d28fbfe22e0f5b22", "label": null, "to": "Wyatt", "width": 1}, {"from": "21cd09470a789d95d28fbfe22e0f5b22", "label": null, "to": "Benefits Data Trust", "width": 1}, {"from": "21cd09470a789d95d28fbfe22e0f5b22", "label": null, "to": "Office Of Federal Student Aid", "width": 1}, {"from": "Wyatt", "label": null, "to": "Benefits Data Trust", "width": 1}, {"from": "Wyatt", "label": null, "to": "Office Of Federal Student Aid", "width": 1}, {"from": "a8a3a5bbfa4a15168152c2e35b5355fd", "label": null, "to": "College Application", "width": 1}, {"from": "a8a3a5bbfa4a15168152c2e35b5355fd", "label": null, "to": "Fafsa", "width": 1}, {"from": "a8a3a5bbfa4a15168152c2e35b5355fd", "label": null, "to": "College", "width": 1}, {"from": "a8a3a5bbfa4a15168152c2e35b5355fd", "label": null, "to": "University", "width": 1}, {"from": "a8a3a5bbfa4a15168152c2e35b5355fd", "label": null, "to": "Federal Aid", "width": 1}, {"from": "a8a3a5bbfa4a15168152c2e35b5355fd", "label": null, "to": "Need-Based Aid", "width": 1}, {"from": "College Application", "label": null, "to": "College", "width": 1}, {"from": "Common App", "label": null, "to": "Need-Based Aid", "width": 1}, {"from": "3d1bce07be82b971747e05ee20a7c362", "label": null, "to": "College Costs", "width": 1}, {"from": "3d1bce07be82b971747e05ee20a7c362", "label": null, "to": "Fafsa", "width": 1}, {"from": "3d1bce07be82b971747e05ee20a7c362", "label": null, "to": "Financial Aid", "width": 1}, {"from": "3d1bce07be82b971747e05ee20a7c362", "label": null, "to": "Colleges", "width": 1}, {"from": "3d1bce07be82b971747e05ee20a7c362", "label": null, "to": "College Costs Information", "width": 1}, {"from": "College Costs", "label": null, "to": "Colleges", "width": 1}, {"from": "Colleges", "label": null, "to": "College Costs Information", "width": 1}, {"from": "7a2a28d9bb88da15ac073049112730ce", "label": null, "to": "Fsa Id", "width": 1}, {"from": "7a2a28d9bb88da15ac073049112730ce", "label": null, "to": "Https://Studentaid.Gov/Fsa-Id/Create-Account/Launch", "width": 1}, {"from": "7a2a28d9bb88da15ac073049112730ce", "label": null, "to": "Social Security Number", "width": 1}, {"from": "7a2a28d9bb88da15ac073049112730ce", "label": null, "to": "Name", "width": 1}, {"from": "7a2a28d9bb88da15ac073049112730ce", "label": null, "to": "Date Of Birth", "width": 1}, {"from": "7a2a28d9bb88da15ac073049112730ce", "label": null, "to": "Email Address", "width": 1}, {"from": "7a2a28d9bb88da15ac073049112730ce", "label": null, "to": "Permanent Address", "width": 1}, {"from": "7a2a28d9bb88da15ac073049112730ce", "label": null, "to": "Phone Number", "width": 1}, {"from": "7a2a28d9bb88da15ac073049112730ce", "label": null, "to": "Fsa Id And Password", "width": 1}, {"from": "d3c157170438f177fbf50d6bc4b5de6b", "label": null, "to": "Crisis Counselor", "width": 1}, {"from": "d3c157170438f177fbf50d6bc4b5de6b", "label": null, "to": "Crisis Text Line", "width": 1}, {"from": "d3c157170438f177fbf50d6bc4b5de6b", "label": null, "to": "911", "width": 1}, {"from": "Crisis Text Line", "label": null, "to": "Crisis Counselor", "width": 1}, {"from": "Crisis Text Line", "label": null, "to": "741741", "width": 1}, {"from": "911", "label": null, "to": "Crisis Counselor", "width": 1}, {"from": "16f8e7d7d872490aed5d026d46894456", "label": null, "to": "Css Profile", "width": 1}, {"from": "16f8e7d7d872490aed5d026d46894456", "label": null, "to": "Schools", "width": 1}, {"from": "16f8e7d7d872490aed5d026d46894456", "label": null, "to": "Institutional Aid", "width": 1}, {"from": "Css Profile", "label": null, "to": "Schools", "width": 1}, {"from": "Schools", "label": null, "to": "Institutional Aid", "width": 1}, {"from": "feea6b8d0297f85a1ea999907d897366", "label": null, "to": "Daca Status", "width": 1}, {"from": "feea6b8d0297f85a1ea999907d897366", "label": null, "to": "Federal Financial Aid", "width": 1}, {"from": "feea6b8d0297f85a1ea999907d897366", "label": null, "to": "Fafsa", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
